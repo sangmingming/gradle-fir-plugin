@@ -1,0 +1,51 @@
+.gradle
+gradle/
+/local.properties
+/.idea/workspace.xml
+.DS_Store
+.idea/
+build
+gen
+Libs/AndroidCrop/bin
+Libs/AndroidCrop/build
+Libs/GPUImage/build
+Libs/ListViewAnimationLib/build
+Libs/ListViewAnimationLib/bin
+Libs/OneKeyShare/build
+Libs/PhotoView/build
+Libs/ShareSdk/bin
+Libs/ShareSdk/build
+Libs/StickyListHeaders/bin
+Libs/StickyListHeaders/build
+Libs/viewpagerindicatorLib/bin
+Libs/viewpagerindicatorLib/build
+Libs/AndroidPlistParser/bin
+Libs/AndroidPlistParser/build
+
+lint.xml
+log.txt
+
+main/build
+main/gen
+
+.metadata
+out/
+
+# Intellij project files
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# Eclipse project files
+.classpath
+.project
+
+Libs/KeyBoardLib/build
+Libs/KeyBoardLib/bin

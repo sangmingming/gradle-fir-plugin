@@ -1,0 +1,112 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+group = 'me.isming'
+archivesBaseName = 'firup'
+version = '0.1.0'
+sourceCompatibility = 1.6
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile gradleApi()
+    //groovy localGroovy()
+    compile 'org.json:json:20090211'
+    compile 'com.squareup.okhttp:okhttp:2.2.0'
+    compile 'commons-lang:commons-lang:2.6'
+    runtime 'com.squareup.okhttp:okhttp:2.2.0'
+
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
+}
+
+task javadocJar(type: Jar, dependsOn: groovydoc) {
+    classifier = 'javadoc'
+    from "${buildDir}/javadoc"
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+artifacts {
+    archives jar
+    archives javadocJar
+    archives sourcesJar
+}
+
+// local upload
+
+//uploadArchives {
+//  repositories {
+//    mavenDeployer {
+//      repository(url: 'file://' + new File(System.getProperty('user.home'), '.m2/repository').absolutePath)
+//    }
+//  }
+//}
+
+
+signing {
+    required { gradle.taskGraph.hasTask("uploadArchives") && hasProperty('signing.keyId') }
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+
+            beforeDeployment { deployment -> signing.signPom(deployment) }
+
+            if (project.hasProperty('NEXUS_USERNAME')) {
+                snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots") {
+                    authentication(userName: project.getProperty('NEXUS_USERNAME'),
+                            password: project.getProperty('NEXUS_PASSWORD'))
+                }
+
+                repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2") {
+                    authentication(userName: project.getProperty('NEXUS_USERNAME'),
+                            password: project.getProperty('NEXUS_PASSWORD'))
+                }
+            }
+            uniqueVersion = false
+
+            pom.project {
+
+                parent {
+                    groupId 'org.sonatype.oss'
+                    artifactId 'oss-parent'
+                    version '7'
+                }
+
+                name 'Gradle Pugongying Upload Plugin'
+                packaging 'jar'
+                description 'A plugin used for upload Pugongying apk.'
+                url 'https://github.com/dodocat/gradle-pgyer-plugin'
+
+                scm {
+                    url 'https://github.com/dodocat/gradle-pgyer-plugin'
+                    connection 'scm:git:https://github.com/dodocat/gradle-pgyer-plugin.git'
+                    developerConnection 'scm:git:https://github.com/dodocat/gradle-pgyer-plugin.git'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution 'repo'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'dodocat'
+                        name 'Cindy'
+                    }
+                }
+            }
+        }
+    }
+}
