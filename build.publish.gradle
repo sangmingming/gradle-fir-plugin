@@ -27,14 +27,14 @@ uploadArchives {
     }
     beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
     pom.project {
-      name 'Gradle DeployGate Plugin'
+      name 'Gradle Fir Plugin'
         packaging 'jar'
         description project.description
-        url 'https://github.com/DeployGate/gradle-deploygate-plugin'
+        url 'https://github.com/sangmingming/gradle-fir-plugin'
         scm {
-          url 'git@github.com:DeployGate/gradle-deploygate-plugin.git'
-          connection 'scm:git:git@github.com:DeployGate/gradle-deploygate-plugin.git'
-          developerConnection 'scm:git:git@github.com:DeployGate/gradle-deploygate-plugin.git'
+          url 'git@github.com:sangmingming/gradle-fir-plugin.git'
+          connection 'scm:git:git@github.com:sangmingming/gradle-fir-plugin.git'
+          developerConnection 'scm:git:git@github.com:sangmingming/gradle-fir-plugin.git'
         }
         licenses {
           license {
@@ -45,10 +45,11 @@ uploadArchives {
         }
       developers {
         developer {
-          id sonatypeUsername
-          name sonatypeFullname
+          id 'sangmingming'
+          name 'Sangmingming'
         }
       }
     }
   }
 }
+
