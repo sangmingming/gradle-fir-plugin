@@ -81,15 +81,15 @@ uploadArchives {
                     version '7'
                 }
 
-                name 'Gradle Pugongying Upload Plugin'
+                name 'Gradle Fir Upload Plugin'
                 packaging 'jar'
-                description 'A plugin used for upload Pugongying apk.'
-                url 'https://github.com/dodocat/gradle-pgyer-plugin'
+                description 'A plugin used for upload Fir apk.'
+                url 'https://github.com/sangmingming/gradle-fir-plugin'
 
                 scm {
-                    url 'https://github.com/dodocat/gradle-pgyer-plugin'
-                    connection 'scm:git:https://github.com/dodocat/gradle-pgyer-plugin.git'
-                    developerConnection 'scm:git:https://github.com/dodocat/gradle-pgyer-plugin.git'
+                    url 'https://github.com/sangmingming/gradle-fir-plugin'
+                    connection 'scm:git:https://github.com/sangmingming/gradle-fir-plugin.git'
+                    developerConnection 'scm:git:https://github.com/sangmingming/gradle-fir-plugin.git'
                 }
 
                 licenses {
@@ -102,8 +102,8 @@ uploadArchives {
 
                 developers {
                     developer {
-                        id 'dodocat'
-                        name 'Cindy'
+                        id 'sangmingming'
+                        name 'Sangmingming'
                     }
                 }
             }
