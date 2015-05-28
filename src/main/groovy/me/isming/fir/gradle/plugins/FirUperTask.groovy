@@ -21,7 +21,7 @@ class FirUperTask extends DefaultTask {
         if (jsonObject == null) {
             return
         }
-        JSONObject pkgJson = jsonObject.getJSONObject("pkg")
+        JSONObject pkgJson = jsonObject.getJSONObject("bundle").getJSONObject("pkg")
         if (pkgJson != null) {
             JSONObject result = httpPost(pkgJson, apk)
             errorHandling(result)
@@ -30,7 +30,7 @@ class FirUperTask extends DefaultTask {
     }
 
     private void errorHandling(JSONObject json) {
-        print(json)
+        println json.toString()
     }
 
     private JSONObject getAppInfo(Project project) {
@@ -45,6 +45,7 @@ class FirUperTask extends DefaultTask {
         InputStream is = response.body().byteStream()
         BufferedReader reader = new BufferedReader(new InputStreamReader(is))
         JSONObject json = new JSONObject(reader.readLine())
+        println json.toString()
         is.close()
         return json;
     }

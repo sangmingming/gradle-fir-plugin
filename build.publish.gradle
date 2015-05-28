@@ -47,6 +47,7 @@ uploadArchives {
         developer {
           id 'sangmingming'
           name 'Sangmingming'
+          email 'sangmingming@vip.qq.com'
         }
       }
     }
