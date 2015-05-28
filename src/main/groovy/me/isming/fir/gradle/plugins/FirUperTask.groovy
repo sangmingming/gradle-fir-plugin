@@ -24,12 +24,12 @@ class FirUperTask extends DefaultTask {
         JSONObject pkgJson = jsonObject.getJSONObject("pkg")
         if (pkgJson != null) {
             JSONObject result = httpPost(pkgJson, apk)
-            errorHandling(apk, result)
+            errorHandling(result)
             println "${apk.name} result: ${result.toString()}"
         }
     }
 
-    private void errorHandling(Apk apk, JSONObject json) {
+    private void errorHandling(JSONObject json) {
         print(json)
     }
 
@@ -83,13 +83,7 @@ class FirUperTask extends DefaultTask {
                         apk.file)
         )
 
-        HashMap<String, String> params = apk.getParams()
-        for (String k : params.keySet()) {
-            println("add part key: " + k + " value: " + params.get(k))
-            multipartBuilder.addFormDataPart(k, params.get(k))
-        }
-
-        Request request = new Request.Builder().url(getEndPoint(project)).
+        Request request = new Request.Builder().url(uploaderUrl).
                 post(multipartBuilder.build()).
                 build()
 
