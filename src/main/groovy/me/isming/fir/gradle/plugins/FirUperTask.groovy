@@ -6,6 +6,7 @@ import com.squareup.okhttp.OkHttpClient
 import com.squareup.okhttp.Request
 import com.squareup.okhttp.RequestBody
 import com.squareup.okhttp.Response
+import okio.BufferedSink
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.Project
@@ -26,6 +27,10 @@ class FirUperTask extends DefaultTask {
             JSONObject result = httpPost(pkgJson, apk)
             errorHandling(result)
             println "${apk.name} result: ${result.toString()}"
+            String version = result.getString("versionOid")
+            String token = project.firuper.userToken
+            updateInfo(version, token)
+            println "finish"
         }
     }
 
@@ -97,5 +102,23 @@ class FirUperTask extends DefaultTask {
         is.close()
 
         return jsonResult
+    }
+
+
+    private JSONObject updateInfo(String versionOid, String userToken) {
+        String url = API_END_POINT + "/appVersion/" + versionOid + "/complete?token=" + userToken + "&type=android"
+        OkHttpClient client = new OkHttpClient()
+        client.setConnectTimeout(10, TimeUnit.SECONDS)
+        client.setReadTimeout(60, TimeUnit.SECONDS)
+        Request request = new Request.Builder().url(url).put(null).build()
+        Response response = client.newCall(request).execute()
+
+        if (response == null || response.body() == null ) return null;
+        InputStream is = response.body().byteStream()
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is))
+        JSONObject json = new JSONObject(reader.readLine())
+        println json.toString()
+        is.close()
+        return json;
     }
 }
