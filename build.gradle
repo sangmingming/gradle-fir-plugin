@@ -23,7 +23,7 @@ apply plugin: 'com.jfrog.bintray'
 
 group = 'me.isming'
 archivesBaseName = 'firup'
-version = '0.1.0'
+version = '0.2.0'
 sourceCompatibility = 1.6
 
 repositories {
@@ -34,6 +34,7 @@ repositories {
 dependencies {
     compile gradleApi()
     //groovy localGroovy()
+    //compile 'com.google.code.gson:gson:2.3.1'
     compile 'org.json:json:20090211'
     compile 'com.squareup.okhttp:okhttp:2.2.0'
     compile 'commons-lang:commons-lang:2.6'
