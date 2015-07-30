@@ -21,13 +21,16 @@ class Apk {
     public HashMap<String, String> getParams() {
         HashMap<String, String> params = new HashMap<String, String>()
         if(version != null) {
-            params.put("version", version)
+            params.put("x:version", version)
         }
         if(build != null) {
-            params.put("build", build)
+            params.put("x:build", build)
         }
         if(changelog != null) {
-            params.put("changelog", changelog)
+            params.put("x:changelog", changelog)
+        }
+        if (name != null) {
+            params.put("x:name", name)
         }
         return params
     }

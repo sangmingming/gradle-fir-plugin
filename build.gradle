@@ -33,14 +33,14 @@ repositories {
 
 dependencies {
     compile gradleApi()
-    //groovy localGroovy()
-    //compile 'com.google.code.gson:gson:2.3.1'
+    groovy localGroovy()
     compile 'org.json:json:20090211'
     compile 'com.squareup.okhttp:okhttp:2.2.0'
     compile 'commons-lang:commons-lang:2.6'
-    runtime 'com.squareup.okhttp:okhttp:2.2.0'
-
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
+
+    runtime 'org.json:json:20090211'
+    runtime 'com.squareup.okhttp:okhttp:2.2.0'
 }
 
 task javadocJar(type: Jar, dependsOn: groovydoc) {
