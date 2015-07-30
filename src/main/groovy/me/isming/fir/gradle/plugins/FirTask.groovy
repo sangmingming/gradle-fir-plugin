@@ -50,10 +50,9 @@ class FirTask extends DefaultTask {
         Request request = new Request.Builder().url(endpoint).post(build.build()).build()
         Response response = client.newCall(request).execute()
         if (response == null || response.body() == null) return null
-        InputStream is = response.body().byteStream()
-        BufferedReader reader = new BufferedInputStream(new InputStreamReader(is))
-        JSONObject json = new JSONObject(reader)
-        is.close()
+        String is = response.body().string()
+        println("getAppinfo result:" + is)
+        JSONObject json = new JSONObject(is)
         return json
     }
 
@@ -73,15 +72,14 @@ class FirTask extends DefaultTask {
         HashMap<String, String> params = apk.getParams()
         for (String k : params.keySet()) {
             println("add part key: " + k + " value: " + params.get(k))
-            build.addFormDataPart(k, params.get(key))
+            build.addFormDataPart(k, params.get(k))
         }
         Request request = new Request.Builder().url(url).post(build.build()).build()
         Response response = client.newCall(request).execute()
         if (response == null || response.body() == null) return null
-        InputStream is = response.body().byteStream()
-        BufferedReader reader = new BufferedInputStream(new InputStreamReader(is))
-        JSONObject json = new JSONObject(reader)
-        is.close()
+        String is = response.body().string()
+        println("upload result:" + is)
+        JSONObject json = new JSONObject(is)
         return json
     }
 }

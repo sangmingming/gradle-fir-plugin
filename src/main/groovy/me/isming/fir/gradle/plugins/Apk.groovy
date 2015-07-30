@@ -50,7 +50,10 @@ class Apk {
                 version = _apk.version
             }
             if(_apk.hasProperty("sourceFile") && _apk.sourceFile != null) {
+                println("sourceFile is note null" + _apk.sourceFile.name)
                 file = _apk.sourceFile
+            } else {
+                println("sourceFile is null")
             }
             if(_apk.hasProperty("build") && _apk.build != null) {
                 build = _apk.build

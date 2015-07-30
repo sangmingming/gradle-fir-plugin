@@ -12,6 +12,7 @@ class FirUpAllTask extends FirTask {
     def uploadFir() {
         List<Apk> apks = Apk.getApks(project)
         if (apks != null && apks.size() > 0) {
+            println("apk:" + apks.get(0).getParams())
             super.upload(project, apks.get(0))
         }
     }
