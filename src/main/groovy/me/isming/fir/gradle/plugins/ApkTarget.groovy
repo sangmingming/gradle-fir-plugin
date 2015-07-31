@@ -11,6 +11,7 @@ class ApkTarget implements Named {
     String version
     String build
     String changelog
+    File icon
 
     public ApkTarget(String name) {
         super()

@@ -8,14 +8,16 @@ class Apk {
     String version
     String build
     String changelog
+    File icon
 
 
-    Apk(String name, File file, String version=null, String build=null, String changelog=null) {
+    Apk(String name, File file, String version=null, String build=null, String changelog=null, File icon = null) {
         this.name = name
         this.file = file
         this.version = version
         this.build = build
         this.changelog = changelog
+        this.icon = icon
     }
 
     public HashMap<String, String> getParams() {
@@ -46,6 +48,7 @@ class Apk {
             String version = null
             String build = null
             String changelog = null
+            File icon = null
             if (_apk.hasProperty("version") && _apk.version != null) {
                 version = _apk.version
             }
@@ -61,7 +64,11 @@ class Apk {
             if(_apk.hasProperty("changelog") && _apk.changelog != null) {
                 changelog = _apk.changelog
             }
-            Apk apk = new Apk(name, file, version, build, changelog);
+
+            if (_apk.hasProperty("icon") && _apk.icon != null) {
+                icon = _apk.icon
+            }
+            Apk apk = new Apk(name, file, version, build, changelog, icon);
             apks.add(apk)
         }
         return apks

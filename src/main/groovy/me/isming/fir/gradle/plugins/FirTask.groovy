@@ -20,13 +20,23 @@ class FirTask extends DefaultTask {
         JSONObject infoObj = getAppInfo(getGetInfoEndPoint(project), token)
         if (infoObj != null && infoObj.has("cert")) {
             JSONObject certObj = infoObj.getJSONObject("cert")
-            if (certObj.has("binary")) {
+            if (certObj.has("binary") && apk.file != null) {
                 JSONObject binaryObj = certObj.getJSONObject("binary")
                 String up_url = binaryObj.getString("upload_url")
                 String up_token = binaryObj.getString("token")
                 String up_key = binaryObj.getString("key")
                 JSONObject reusltobj = uploadApk(up_url, up_key, up_token, apk)
-                println(reusltobj)
+                println("apk上传结果:" + reusltobj)
+            }
+
+            if (certObj.has("icon") && apk.icon != null) {
+                JSONObject iconObj = certObj.getJSONObject("icon")
+                String up_url = iconObj.getString("upload_url")
+                String up_token = iconObj.getString("token")
+                String up_key = iconObj.getString("key")
+                JSONObject reusltobj = uploadIcon(up_url, up_key, up_token, apk)
+                println("icon上传结果:" + reusltobj)
+
             }
         }
     }
@@ -74,6 +84,28 @@ class FirTask extends DefaultTask {
             println("add part key: " + k + " value: " + params.get(k))
             build.addFormDataPart(k, params.get(k))
         }
+        Request request = new Request.Builder().url(url).post(build.build()).build()
+        Response response = client.newCall(request).execute()
+        if (response == null || response.body() == null) return null
+        String is = response.body().string()
+        println("upload result:" + is)
+        JSONObject json = new JSONObject(is)
+        return json
+    }
+
+    private JSONObject uploadIcon(String url, String key, String token, Apk apk) {
+        OkHttpClient client = new OkHttpClient()
+        client.setConnectTimeout(10, TimeUnit.SECONDS);
+        client.setReadTimeout(60, TimeUnit.SECONDS);
+        MultipartBuilder build = new MultipartBuilder().type(MultipartBuilder.FORM)
+        build.addFormDataPart("key", key)
+        build.addFormDataPart("token", token)
+        build.addFormDataPart("file",
+                apk.icon.name,
+                RequestBody.create(
+                        MediaType.parse("application/vnd.android.package-archive"),
+                        apk.icon)
+        )
         Request request = new Request.Builder().url(url).post(build.build()).build()
         Response response = client.newCall(request).execute()
         if (response == null || response.body() == null) return null
