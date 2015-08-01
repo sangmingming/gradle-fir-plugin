@@ -4,22 +4,28 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.deploygate:gradle:0.6.2'
+        classpath 'com.squareup.okhttp:okhttp:2.2.0'
+        classpath 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
+        classpath 'org.json:json:20090211'
+        classpath 'me.isming:firup:0.4.1'
     }
 }
-apply plugin: 'deploygate'
 
-deploygate {
-    userName = ownerName
-    token = myToken
+apply plugin: 'me.isming.fir'
+
+fir {
+    appId  "" //appid
+    userToken  ""//userToken
 
     apks {
         example {
-            sourceFile = file("./DeployGateSample.apk")
-
-            //Below is optional
-            message = "example upload deploygate sample apk"
-            visibility = "public" // public or private
+            sourceFile  file("./DeployGateSample.apk")
+            version "1.1.1"
+            build "222"
+            changelog "example upload deploygate sample apk"
+            icon file("./dfasd.png")
         }
     }
 }
+
+uploadFir.dependsOn assembleRelease
