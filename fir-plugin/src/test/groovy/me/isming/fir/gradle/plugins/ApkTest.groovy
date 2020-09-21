@@ -2,7 +2,7 @@ package me.isming.fir.gradle.plugins
 
 import org.gradle.testfixtures.ProjectBuilder
 import org.junit.Test
-import me.isming.fir.gradle.plugins.Apk
+import Apk
 
 import static org.junit.Assert.assertTrue
 
