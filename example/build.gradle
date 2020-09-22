@@ -1,25 +1,42 @@
-buildscript {
-    repositories {
-        jcenter()
+apply plugin: 'com.android.application'
+apply plugin: 'me.isming.fir'
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
+
+    defaultConfig {
+        applicationId "com.chaquo.myapplication"
+        minSdkVersion 16
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    dependencies {
-        classpath 'com.squareup.okhttp:okhttp:2.2.0'
-        classpath 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
-        classpath 'org.json:json:20090211'
-        classpath 'me.isming:firup:0.4.1'
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    //Ref :  https://stackoverflow.com/questions/31461267/using-a-different-manifestplaceholder-for-each-build-variant
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "DeployGateSample.apk"
+        }
     }
 }
 
-apply plugin: 'me.isming.fir'
-
 fir {
-    appId  "" //appid
-    userToken  ""//userToken
+    appId "" //appid
+    userToken ""//userToken
 
     apks {
         example {
-            sourceFile  file("./DeployGateSample.apk")
+            sourceFile file("./build/outputs/apk/release/DeployGateSample.apk")
             version "1.1.1"
             build "222"
             changelog "example upload deploygate sample apk"
@@ -28,4 +45,16 @@ fir {
     }
 }
 
-uploadFir.dependsOn assembleRelease
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation 'androidx.navigation:navigation-fragment:2.3.0'
+    implementation 'androidx.navigation:navigation-ui:2.3.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+}
+
+uploadFir.dependsOn assemble

@@ -1,129 +1,35 @@
 buildscript {
     repositories {
+        mavenCentral()
+        google()
         jcenter()
+        maven {
+            url uri('./repos')
+        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.0'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0'
-        //classpath 'com.github.dcendents:android-maven-plugin:1.2'
+        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+        classpath 'com.squareup.okhttp:okhttp:2.2.0'
+        classpath 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
+        classpath 'org.json:json:20090211'
+        //FIXME !!! Note  if use cloud can not use !!! because  firup &  FirUp !!! pom file at FirUp   but jar file at firup
+        classpath 'me.isming:firup:0.4.1' //FIXME  get from local repo
     }
 }
+
 allprojects {
     repositories {
+        mavenCentral()
+        google()
         jcenter()
-    }
-}
-
-apply plugin: 'groovy'
-apply plugin: 'maven'
-apply plugin: 'signing'
-apply plugin: 'com.jfrog.bintray'
-
-group = 'me.isming'
-archivesBaseName = 'firup'
-version = '0.4.1'
-sourceCompatibility = 1.6
-
-repositories {
-    mavenCentral()
-    jcenter()
-}
-
-dependencies {
-    compile gradleApi()
-    //groovy localGroovy()
-    compile 'org.json:json:20090211'
-    compile 'com.squareup.okhttp:okhttp:2.2.0'
-    compile 'commons-lang:commons-lang:2.6'
-    compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
-
-    runtime 'org.json:json:20090211'
-    runtime 'com.squareup.okhttp:okhttp:2.2.0'
-}
-
-task javadocJar(type: Jar, dependsOn: groovydoc) {
-    classifier = 'javadoc'
-    from "${buildDir}/javadoc"
-}
-
-task sourcesJar(type: Jar) {
-    from sourceSets.main.allSource
-    classifier = 'sources'
-}
-
-artifacts {
-    archives jar
-    archives javadocJar
-    archives sourcesJar
-}
-
-// local upload
-
-//uploadArchives {
-//  repositories {
-//    mavenDeployer {
-//      repository(url: 'file://' + new File(System.getProperty('user.home'), '.m2/repository').absolutePath)
-//    }
-//  }
-//}
-
-//central upload
-//if (gradle.startParameter.taskNames.contains("uploadArchives")) {
-//    apply from: 'build.publish.gradle'
-//}
-
-
-
-def siteUrl = 'https://github.com/sangmingming/gradle-fir-plugin'      // 项目的主页
-def gitUrl = 'https://github.com/sangmingming/gradle-fir-plugin.git'   // Git仓库的url
-install {
-    repositories.mavenInstaller {
-        // This generates POM.xml with proper parameters
-        pom {
-            project {
-                packaging 'jar'
-                // Add your description here
-                name 'Gradle Fir Plugin'  //项目描述
-                url siteUrl
-                // Set your license
-                licenses {
-                    license {
-                        name 'The Apache Software License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-                developers {
-                    developer {
-                        id 'sangmingming'       //填写开发者基本信息
-                        name 'Sang Mingming'
-                        email 'ming_1990@qq.com'
-                    }
-                }
-                scm {
-                    connection gitUrl
-                    developerConnection gitUrl
-                    url siteUrl
-                }
-            }
+        maven {
+            url uri('./repos')
         }
     }
 }
 
 
-Properties properties = new Properties()
-properties.load(project.rootProject.file('gradle.properties').newDataInputStream())
-bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
-    configurations = ['archives']
-    pkg {
-        repo = "maven"  //发布到Bintray的那个仓库里，默认账户有四个库，我们这里上传到maven库
-        name = "firup"  //发布到Bintray上的项目名字
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = ["Apache-2.0"]
-        publish = true
-    }
-}
