@@ -3,21 +3,32 @@ buildscript {
         mavenCentral()
         google()
         jcenter()
+        maven {
+            url uri('./repos')
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.0.1'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4"
-        //classpath 'com.github.dcendents:android-maven-plugin:1.2'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+        classpath 'com.squareup.okhttp:okhttp:2.2.0'
+        classpath 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
+        classpath 'org.json:json:20090211'
+        //FIXME !!! Note  if use cloud can not use !!! because  firup &  FirUp !!! pom file at FirUp   but jar file at firup
+        classpath 'me.isming:firup:0.4.1' //FIXME  get from local repo
     }
 }
+
 allprojects {
     repositories {
         mavenCentral()
         google()
         jcenter()
+        maven {
+            url uri('./repos')
+        }
     }
 }
 

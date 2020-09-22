@@ -1,0 +1,16 @@
+// local upload
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+//            repository(url: 'file://' + new File(System.getProperty('user.home'), '.m2/repository').absolutePath)
+            repository(url: uri('../repos'))
+        }
+    }
+}
+
+
+
+
+
+
